@@ -280,7 +280,7 @@ fn record_syscall_times(syscall_id: usize) {
     let mut inner = TASK_MANAGER.inner.exclusive_access();
     let current = inner.current_task;
     inner.tasks[current].syscall_times[syscall_id] += 1;
-    inner.tasks[current].time = get_time() as usize;
+    inner.tasks[current].time = get_time_ms();
 }
 
 重新运行了检查一下，居然全部通过了？
@@ -289,3 +289,5 @@ fn record_syscall_times(syscall_id: usize) {
 也就是说这个时长可能包含该任务被其他任务抢占后的等待重新调度的时间。
 
 感觉这里不应该通过啊
+
+不明白上面的写法为什么能通过，现在改了几次代码也通过测试了，如果能调试系统就好了
