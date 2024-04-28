@@ -47,7 +47,7 @@ pub fn enable_timer_interrupt() {
 #[no_mangle]
 pub fn trap_handler(cx: &mut TrapContext) -> &mut TrapContext {
     let scause = scause::read(); // get trap cause
-    let stval = stval::read(); // get extra value
+    let stval: usize = stval::read(); // get extra value
                                // trace!("into {:?}", scause.cause());
     match scause.cause() {
         Trap::Exception(Exception::UserEnvCall) => {
